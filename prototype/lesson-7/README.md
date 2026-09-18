@@ -39,7 +39,7 @@ Any static preview service can serve the generated `dist/` directory from this p
 - Branch: `prototype/filled-holy-spirit-lesson-7`
 - Root directory: `prototype/lesson-7`
 - Build command: `npm run build`
-- Publish directory: `prototype/lesson-7/dist`
+- Publish directory: `dist` (relative to the root directory above)
 
 Do not point a production domain at this branch and do not copy these files into `wp-content`.
 
@@ -50,4 +50,3 @@ Do not point a production domain at this branch and do not copy these files into
 - Learner notes stored in `sessionStorage`; closing the tab ends the session
 - Restart control that clears lesson position, disclosures, and responses
 - Responsive layout, keyboard focus treatment, and reduced-motion support
-
