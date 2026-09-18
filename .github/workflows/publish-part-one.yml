@@ -1,0 +1,46 @@
+name: Preview Prototype Two
+on:
+  push:
+    branches: [prototype/part-one-groundwork]
+    paths:
+      - 'prototype/part-one/**'
+      - '.github/workflows/publish-part-one.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify and build both prototypes
+        run: |
+          npm ci --prefix prototype/part-one
+          npm run check --prefix prototype/part-one
+          npm run check --prefix prototype/lesson-7
+      - name: Preserve Prototype One at its existing URL
+        run: |
+          mkdir -p preview/part-one
+          cp -R prototype/lesson-7/dist/. preview/
+          cp -R prototype/part-one/dist/. preview/part-one/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: preview
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}part-one/
+    steps:
+      - name: Publish prototype preview
+        id: deployment
+        uses: actions/deploy-pages@v4

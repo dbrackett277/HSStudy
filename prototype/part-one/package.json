@@ -1,0 +1,1 @@
+{"name":"filled-holy-spirit-part-one","version":"0.2.0","private":true,"type":"module","scripts":{"dev":"node scripts/serve.mjs","build":"node scripts/build.mjs","test":"node --test tests/*.test.mjs","check":"node --check src/main.js && node --check src/course-data.js && npm test && npm run build"},"engines":{"node":">=20"}}

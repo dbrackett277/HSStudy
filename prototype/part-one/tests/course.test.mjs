@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {modules,steps,reflectionPrompts} from '../src/course-data.js';
+import {initialState,normalize,loadState,saveState,completeStep} from '../src/state.js';
+import {safeSisUrl} from '../src/resources.js';
+const resources=JSON.parse(await readFile(new URL('../src/resources.json',import.meta.url)));
+test('every required Scripture resolves to text with provenance',()=>{for(const s of steps)for(const b of s.blocks)if(b.type==='scripture'){const r=resources[b.key];assert.ok(r?.text&&r.context,s.id);assert.ok(r.source==='sis-snapshot'||r.sourceNote);if(r.source==='sis-snapshot'){assert.ok(safeSisUrl(r.url));assert.ok(r.slug);assert.ok(r.retrievedAt);}}});
+test('step and reflection IDs are unique; all revisits resolve',()=>{assert.equal(new Set(steps.map(s=>s.id)).size,steps.length);const ids=steps.flatMap(s=>s.blocks.filter(b=>b.type==='reflection').map(b=>b.id));assert.equal(ids.length,new Set(ids).size);for(const s of steps)for(const b of s.blocks)if(b.type==='revisit')b.ids.forEach(id=>assert.ok(reflectionPrompts[id]));assert.equal(modules.length,6);});
+test('jumping to the end does not complete skipped steps',()=>{let s=initialState();s.current=steps.length-1;s=completeStep(s,s.current);assert.deepEqual(s.completed,[steps.length-1]);s=completeStep(s,s.current);assert.equal(s.completed.length,1);});
+test('resume preserves reflections, choices, reveals and progress',()=>{let raw;const storage={getItem:()=>raw,setItem:(_,v)=>raw=v};let s={...initialState(),current:12,responses:{'baseline-confusion':'My original thought <not markup>'},answers:{'baptism-roles-0':'Son'},revealed:{a:true},completed:[0,1]};assert.equal(saveState(storage,s),true);assert.deepEqual(loadState(storage,steps.length).state,s);});
+test('storage denial and corruption do not prevent study',()=>{const storage={getItem(){throw Error('blocked');},setItem(){throw Error('quota');}};assert.deepEqual(loadState(storage,steps.length).state,initialState());assert.equal(saveState(storage,initialState()),false);assert.deepEqual(loadState({getItem:()=>'{'},steps.length).state,initialState());});
+test('malformed saved progress is bounded',()=>{assert.deepEqual(normalize({version:1},steps.length),initialState());const r=normalize({version:2,current:999,completed:[-1,0,0,999,'1'],responses:{ok:'note',bad:{html:true}}},steps.length);assert.equal(r.current,steps.length-1);assert.deepEqual(r.completed,[0]);assert.deepEqual(r.responses,{ok:'note'});});
+test('SIS external links reject executable and lookalike URLs',()=>{assert.equal(safeSisUrl('javascript:alert(1)'),null);assert.equal(safeSisUrl('https://scriptureinterpretsscripture.com.evil.test/'),null);assert.equal(safeSisUrl('https://scriptureinterpretsscripture.com/pray-in-the-spirit/'),'https://scriptureinterpretsscripture.com/pray-in-the-spirit/');});
