@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A private working prototype for Lesson 7, God's Promise, from Filled with the Holy Spirit."
+    />
+    <title>God's Promise | Filled with the Holy Spirit</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#lesson-content">Skip to lesson content</a>
+
+    <div class="site-shell">
+      <header class="course-header">
+        <div>
+          <p class="eyebrow">Filled with the Holy Spirit</p>
+          <p class="course-context">Part Three: The Holy Spirit &amp; the Church</p>
+        </div>
+        <button class="text-button" id="restart-button" type="button">Restart lesson</button>
+      </header>
+
+      <nav class="course-map" aria-label="Course map">
+        <p class="course-map__label">Course map</p>
+        <ol id="course-map-list"></ol>
+      </nav>
+
+      <div class="lesson-layout">
+        <aside class="lesson-rail" aria-label="Lesson sections">
+          <div class="lesson-rail__heading">
+            <span>Lesson 7</span>
+            <strong>God's Promise</strong>
+          </div>
+          <ol id="section-list"></ol>
+        </aside>
+
+        <main id="lesson-content" tabindex="-1">
+          <div class="progress-block" aria-live="polite">
+            <div class="progress-copy">
+              <span id="progress-label">Section 1 of 11</span>
+              <span id="progress-title"></span>
+            </div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-valuemin="1"
+              aria-valuemax="11"
+              aria-valuenow="1"
+              aria-labelledby="progress-label"
+            >
+              <span id="progress-bar"></span>
+            </div>
+          </div>
+
+          <article id="section-content" class="lesson-section"></article>
+
+          <footer class="lesson-controls" aria-label="Lesson navigation">
+            <button class="button button--secondary" id="back-button" type="button">Back</button>
+            <p id="response-status" class="response-status" aria-live="polite"></p>
+            <button class="button button--primary" id="next-button" type="button">Continue</button>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <dialog id="restart-dialog" aria-labelledby="restart-title">
+      <form method="dialog">
+        <p class="eyebrow">Restart lesson</p>
+        <h2 id="restart-title">Clear this session?</h2>
+        <p>Your written responses and lesson position will be removed from this browser tab.</p>
+        <div class="dialog-actions">
+          <button class="button button--secondary" value="cancel">Keep my place</button>
+          <button class="button button--danger" id="confirm-restart" value="confirm">Clear and restart</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
