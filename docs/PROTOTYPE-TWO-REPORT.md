@@ -2,7 +2,7 @@
 
 ## Delivery status
 
-The user authorized publishing Prototype Two to `dbrackett277/HSStudy` and its preview on 18 September 2026. Publication uses the separate `prototype/part-one-groundwork` branch; no merge into Prototype One is needed.
+Prototype Two is published at https://dbrackett277.github.io/HSStudy/part-one/. GitHub Actions run 35349127343 completed its deployment successfully on 19 September 2026 after the owner allowed the prototype branch in the github-pages environment. Publication uses the separate `prototype/part-one-groundwork` branch; no merge into Prototype One was needed.
 
 ## What is implemented
 
@@ -89,7 +89,7 @@ Limitations: no cross-device sync; clearing browser data clears progress; no ser
 
 Seven targeted tests cover resource resolution/provenance, ID integrity and baseline references, honest completion after skipped steps, persistence, denied/corrupted storage, malformed state, and safe canonical URLs. All pass. Prototype One's five existing tests, lint, and build also pass. Syntax checks and the Part One static build pass.
 
-The local-preview connection from the cloud browser did not complete. Consequently desktop/mobile visual review, real browser interaction checks, screen-reader behavior, and keyboard focus behavior must not be represented as verified yet. Responsive CSS and semantic controls are implemented; a design review is still required. The following user tests should precede Part Two:
+Live desktop browser checks on 19 September 2026 verified the opening layout, Continue progression, module navigation without false completion, reflection persistence after reload, the reflection notebook, Scripture and immediate-context expansion, and comparison feedback. These are representative checks, not an exhaustive review of every step. Mobile visual review, screen-reader behavior, and complete keyboard focus behavior remain unverified. Responsive CSS and semantic controls are implemented; a design review is still required. The following user tests should precede Part Two:
 
 1. Start cold: can the learner describe the study's purpose and the current question without help?
 2. Follow the path: identify any transition that feels abrupt or overexplained. In particular, test the early move into Corinthians and the shift from prayer to shared church life.
