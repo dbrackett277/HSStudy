@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '22.23.4'
       - name: Verify and build both prototypes
         run: |
           npm ci --prefix prototype/part-one
