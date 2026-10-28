@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
+          # Patched runtime for the October 2026 security advisories.
           node-version: '22.23.4'
       - name: Verify and build both prototypes
         run: |
